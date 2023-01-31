@@ -2,6 +2,10 @@ FROM nginx:stable
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+RUN set -x \
+  && apt-get update && apt-get upgrade -y \
+  && apt-get install cron logrotate -y
+
 COPY docker/nginx-ui/get-latest.sh /nginx-ui/
 RUN set -x \
   && mv /etc/nginx /etc/nginx-orig \

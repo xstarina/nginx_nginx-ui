@@ -31,6 +31,10 @@ if [[ ! -f "${UI_DIR}/app.ini" ]]; then
 RunMode = release
 HttpPort = 9000
 HTTPChallengePort = 9180
+
+[nginx_log]
+AccessLogPath = /var/log/nginx/access.log
+ErrorLogPath = /var/log/nginx/error.log
 EOF
 
   echo "Nginx UI config file is done"

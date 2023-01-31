@@ -1,6 +1,6 @@
 set -x
 
-ver="1.1"
+ver="1.7.3"
 img="starina/nginx_nginx-ui"
 
 docker build --network host -t ${img}:${ver} -t ${img}:latest . \
