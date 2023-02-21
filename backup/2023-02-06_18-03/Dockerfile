@@ -1,7 +1,10 @@
-FROM nginx:stable-alpine
+FROM nginx:stable
+
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN set -x \
-  && apk update && apk add --no-cache logrotate bash openrc
+  && apt-get update && apt-get upgrade -y \
+  && apt-get install cron logrotate -y
 
 COPY docker/nginx-ui/get-latest.sh /nginx-ui/
 RUN set -x \

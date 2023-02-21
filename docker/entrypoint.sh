@@ -40,6 +40,11 @@ EOF
   echo "Nginx UI config file is done"
 fi
 
-for SVC in nginx-ui cron; do service $SVC start; done
+# Debian
+# for SVC in nginx-ui cron; do service $SVC start; done
+
+# Alpine
+for SVC in nginx-ui; do rc-service $SVC start; done
+/usr/sbin/crond
 
 exec "$@"

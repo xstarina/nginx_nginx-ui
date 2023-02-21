@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# v1.7.6
+
 set -e
 
 # You can set this variable whatever you want in shell session right before running this script by issuing:

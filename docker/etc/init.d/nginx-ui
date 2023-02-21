@@ -6,8 +6,8 @@ DAEMON=${DAEMON:-/usr/local/bin/nginx-ui}
 DAEMON_ARGS=${DAEMON_ARGS:--config /etc/nginx-ui/app.ini}
 PIDFILE=${PIDFILE:-/var/run/nginx-ui.pid}
 
-. /lib/init/vars.sh
-. /lib/lsb/init-functions
+[ -f /lib/init/vars.sh ] && . /lib/init/vars.sh
+[ -f /lib/lsb/init-functions ] && . /lib/lsb/init-functions
 
 do_start()
 {
