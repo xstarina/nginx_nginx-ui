@@ -1,14 +1,15 @@
 FROM nginx:stable-alpine
 
 RUN set -x \
-  && apk update && apk add --no-cache logrotate bash openrc
+ && apk upgrade --no-cache \
+ && apk add --no-cache logrotate bash openrc
 
-COPY docker/nginx-ui/get-latest.sh /nginx-ui/
+COPY ./docker/nginx-ui/get-latest.sh /nginx-ui/
 RUN set -x \
   && mv /etc/nginx /etc/nginx-orig \
   && bash /nginx-ui/get-latest.sh
 
-COPY docker /
+COPY ./docker/ /
 RUN set -x && chmod +x /etc/init.d/*
 
 EXPOSE 80 443 9000
