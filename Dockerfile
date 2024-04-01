@@ -1,17 +1,31 @@
-FROM nginx:stable-alpine
+FROM nginx:stable-alpine-slim AS base
 
-RUN set -x \
-  && apk update && apk add --no-cache logrotate bash openrc
+RUN set -ex; \
+    # apk upgrade --no-cache; \
+    apk add --update --no-cache supervisor logrotate; \
+    mv /etc/nginx /etc/nginx-orig;
 
-COPY docker/nginx-ui/get-latest.sh /nginx-ui/
-RUN set -x \
-  && mv /etc/nginx /etc/nginx-orig \
-  && bash /nginx-ui/get-latest.sh
+# ----------
 
-COPY docker /
-RUN set -x && chmod +x /etc/init.d/*
+FROM base AS build
+
+WORKDIR /build/
+COPY ./build/ ./
+
+RUN sh get-nginx-ui.sh
+
+# ----------
+
+FROM base AS final
+
+COPY --from=build /build/extract/nginx-ui /usr/local/bin/nginx-ui
+COPY ./docker/ /
+
+LABEL org.opencontainers.image.title=nginx_nginx-ui \
+      org.opencontainers.image.description="Nginx + Nginx-ui as a Docker container" \
+      org.opencontainers.image.vendor=starina
 
 EXPOSE 80 443 9000
 
-ENTRYPOINT ["bash", "/entrypoint.sh"]
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["sh", "/entrypoint.sh"]
+CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
