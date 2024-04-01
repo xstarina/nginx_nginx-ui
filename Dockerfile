@@ -1,8 +1,8 @@
 FROM nginx:stable-alpine-slim AS base
 
 RUN set -ex; \
-    # apk upgrade --no-cache; \
-    apk add --update --no-cache supervisor logrotate; \
+    apk upgrade --no-cache; \
+    apk add --no-cache supervisor logrotate; \
     mv /etc/nginx /etc/nginx-orig;
 
 # ----------
