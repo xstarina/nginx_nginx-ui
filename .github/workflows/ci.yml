@@ -51,10 +51,6 @@ jobs:
             type=semver,pattern={{major}}
             type=ref,event=pr
             type=edge
-          labels: |
-            org.opencontainers.image.title=nginx_nginx-ui
-            org.opencontainers.image.description=Nginx + Nginx-ui as a Docker container
-            org.opencontainers.image.vendor=starina
       -
         name: Login to DockerHub
         if: github.event_name != 'pull_request'
