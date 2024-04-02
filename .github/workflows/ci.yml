@@ -26,6 +26,7 @@ env:
 jobs:
   docker:
     runs-on: ubuntu-latest
+    if: startsWith(github.event.ref, 'refs/tags/v')
     steps:
       -
         name: Checkout
@@ -49,6 +50,7 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
             type=ref,event=pr
+            type=edge
           labels: |
             org.opencontainers.image.title=nginx_nginx-ui
             org.opencontainers.image.description=Nginx + Nginx-ui as a Docker container
